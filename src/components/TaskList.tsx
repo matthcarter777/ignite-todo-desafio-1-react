@@ -29,25 +29,12 @@ export function TaskList() {
   }
 
   function handleToggleTaskCompletion(id: number) {
-    const findTask = tasks.find(task => task.id === id);
-    const allTasks = tasks.filter(task => task.id !== id);
+    const updatedTask = tasks.map( task => task.id === id ? {
+      ...task,
+      isComplete: !task.isComplete 
+      } : task);
 
-    if (!findTask) return;
-    
-    if(findTask.isComplete === true) {
-      findTask.isComplete = false;
-
-      const updatedTask = [...allTasks, findTask];
-
-      setTasks(updatedTask);
-    } else {
-      findTask.isComplete = true;
-
-      const updatedTask = [...allTasks, findTask];
-
-      setTasks(updatedTask);
-    }
-
+    setTasks(updatedTask)
   }
 
   function handleRemoveTask(id: number) {
