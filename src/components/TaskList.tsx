@@ -18,12 +18,13 @@ export function TaskList() {
 
     if(newTaskTitle !== '') {
       const newTask: Task = {
-        id: tasks.length + 1,
+        id: Math.random(),
         title: newTaskTitle,
         isComplete: false
       }
       
       setTasks([...tasks, newTask]);
+      setNewTaskTitle('');
     }
   }
 
@@ -31,13 +32,22 @@ export function TaskList() {
     const findTask = tasks.find(task => task.id === id);
     const allTasks = tasks.filter(task => task.id !== id);
 
-    if (findTask) {
+    if (!findTask) return;
+    
+    if(findTask.isComplete === true) {
+      findTask.isComplete = false;
+
+      const updatedTask = [...allTasks, findTask];
+
+      setTasks(updatedTask);
+    } else {
       findTask.isComplete = true;
 
       const updatedTask = [...allTasks, findTask];
 
       setTasks(updatedTask);
     }
+
   }
 
   function handleRemoveTask(id: number) {
